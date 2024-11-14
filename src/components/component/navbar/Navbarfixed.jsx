@@ -51,6 +51,7 @@ const Navbarfixed = () =>{
             borderRight: 1,
             borderColor: "rgba(220, 218, 206, 1)",
             marginTop: "5vh",
+            top:"0"
           }}
         >
           <Box

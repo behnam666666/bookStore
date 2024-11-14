@@ -14,7 +14,7 @@ import Homecontent from "./Homecontent";
 import Navbarbook from "../navbar/Navbarbook";
 import { position } from "stylis";
 import zIndex from "@mui/material/styles/zIndex";
-const Home = ({ newbooks, loading ,showbooknav, setshowbooknav  }) => {
+const Home = ({ newbooks, statusnewbooks ,showbooknav, setshowbooknav , recommendbook , statusrecommend  }) => {
   const [gridcount, setgridcount] = useState({
     grid1: 12,
     grid2: 0,
@@ -46,25 +46,25 @@ const Home = ({ newbooks, loading ,showbooknav, setshowbooknav  }) => {
         gridcount={gridcount}
         setgridcount={setgridcount}
         newbooks={newbooks}
-        loading={loading}
+        loading={statusnewbooks}
         titlenav={"کتاب های روز"}
       />
-      <Navbarbook
+       <Navbarbook
         setshowbooknav={setshowbooknav}
         gridcount={gridcount}
         setgridcount={setgridcount}
-        newbooks={newbooks}
-        loading={loading}
+        newbooks={recommendbook}
+        loading={statusrecommend}
         titlenav={"پیشنهاد بر اساس علایق شما"}
       />
-      <Navbarbook
+      {/* <Navbarbook
         setshowbooknav={setshowbooknav}
         gridcount={gridcount}
         setgridcount={setgridcount}
         newbooks={newbooks}
         loading={loading}
         titlenav={"پیشنهاد بر اساس سوابق"}
-      />
+      /> */} 
      
     </>
   );

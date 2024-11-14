@@ -2,6 +2,10 @@ import { Box, Typography, TextField, Avatar } from "@mui/material";
 import StyledBadge from "../../stylecomponents/StyledBadge";
 import Grid from "@mui/material/Grid2";
 
+import { useState , useEffect } from "react";
+
+import { Link } from "react-router-dom";
+
 import search from "../../../assets/logo/search.svg";
 import osi from "../../../assets/logo/osi.png";
 import alarm from "../../../assets/logo/alarm.svg";
@@ -10,7 +14,42 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
+
+import { getuser } from "../../../services/contactService";
 const Header = () => {
+
+  const [userstatus , setuserstatus] = useState(401);
+  const [userprofile , setuserprofile] = useState()
+
+
+  useEffect(()=>{
+
+    const fetchData = async () => {
+      try {
+        const {status , data}= await getuser();
+
+        console.log ("status user :" ,data)
+        setuserprofile(data);
+        setuserstatus(status);
+
+        }
+       catch (err) {
+       
+        setuserstatus(err.response.status)
+        if (err.response) {
+          const { status } = err.response;
+          console.error(`status user: ${status}`);
+        } else {
+          console.error("status user:", err.message);
+        }
+
+        
+      }
+    };
+    fetchData();
+
+  },[])
+  
   return (
     <>
     
@@ -26,7 +65,7 @@ const Header = () => {
             position:"relative",
             zIndex:"10",
             // height:"50px"
-
+            
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -40,7 +79,7 @@ const Header = () => {
                 zIndex: "1",
                 width: 24,
                 height: 24,
-                backgroundColor: "rgba(255, 255, 255, 1)",
+                backgroundColor: "rgba(240, 239, 230, 1)",
                 padding: "6.5px",
                 border: "1px solid rgba(220, 218, 206, 1)",
                 borderRight: "none",
@@ -55,7 +94,7 @@ const Header = () => {
               placeholder="جستجوی نام کتاب ، نویسنده ، نشر ،..."
               sx={{
                 width: "275px",
-                backgroundColor: "rgba(255, 255, 255, 1)",
+                backgroundColor: "rgba(240, 239, 230, 1)",
                 border: " 1px solid rgba(220, 218, 206, 1)",
                 borderRadius: "12px",
                 "& .MuiOutlinedInput-root": {
@@ -92,20 +131,23 @@ const Header = () => {
               justifyContent: "space-between",
             }}
           >
-            <StyledBadge
+
+            {userstatus==401?"" :<StyledBadge
               overlap="circular"
               anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
               variant="dot"
             >
               <Avatar src={osi} sx={{ width: "46px", height: "46px" }} />
-            </StyledBadge>
+            </StyledBadge>}
+            
 
             <Typography
               variant="h6"
               margin="0 36px 0 12px"
               sx={{ fontWeight: "600" }}
             >
-              Pooria Ostowar
+              {userstatus==401? <Link to={`/`} style={{color:"black" , textDecoration:"none"}}>ورود</Link>:`${userprofile.firstname} ${userprofile.lastname}`}
+              
             </Typography>
             <Box
               component="img"

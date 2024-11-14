@@ -14,7 +14,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 import Loading1 from "../loading/loading";
-const Navbarbook = ({ gridcount, setgridcount, newbooks, loading , titlenav , setshowbooknav }) => {
+const Navbarbook = ({ gridcount, setgridcount, newbooks, loading , titlenav , setshowbooknav  }) => {
   const swiperRef = useRef(null);
   const handleSlideToCenter = (index) => {
     if (swiperRef.current) {
@@ -31,7 +31,7 @@ const Navbarbook = ({ gridcount, setgridcount, newbooks, loading , titlenav , se
     <>
       <Grid
         size={gridcount.grid1}
-        sx={{ marginTop: "30px", transition: ".7s" }}
+        sx={{ marginTop: "30px", transition: ".7s"  }}
       >
         <Box
           sx={{
@@ -68,6 +68,8 @@ const Navbarbook = ({ gridcount, setgridcount, newbooks, loading , titlenav , se
           </Box>
         </Box>
 
+        {loading==404? <h1 style={{textAlign:"center" }}>داده ای  برای چاپ موجود نیست 😓🤷‍♂️</h1> :""}
+        {loading==401? <h1 style={{textAlign:"center" }}>لطفا ثبت نام یا ورود کنید 😊✌️</h1> :
         <Swiper
           style={{
             height: "400px",
@@ -85,14 +87,7 @@ const Navbarbook = ({ gridcount, setgridcount, newbooks, loading , titlenav , se
           onSwiper={(swiper) => (swiperRef.current = swiper)}
           onSlideChange={handleSlideChange}
         >
-          {loading?[1,2,3,4,5,6].map((c,index)=> <SwiperSlide key={index} style={{
-                margin: "auto",
-                position: "relative",
-                top: centerIndex === index ? "0px" : "48px",
-                width: centerIndex === index ? "224px" : "192px",
-                height: centerIndex === index ? "389px" : "341px",
-                transition: ".7s",
-              }} > <Loading1 /> </SwiperSlide>)  : newbooks.map((book, index) => (
+          {loading ==200  ?  newbooks.map((book, index) => (
             <SwiperSlide
               key={index}
               onClick={() =>{ handleSlideToCenter(index) ; window.scrollTo({ top: 0, behavior: 'smooth' }) ;}}
@@ -165,6 +160,7 @@ const Navbarbook = ({ gridcount, setgridcount, newbooks, loading , titlenav , se
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
+                      marginTop:"10px"
                     }}
                   >
                     {book.title}
@@ -199,8 +195,17 @@ const Navbarbook = ({ gridcount, setgridcount, newbooks, loading , titlenav , se
                 </Box>
               </Box>
             </SwiperSlide>
-          ))}
-        </Swiper>
+          )): loading==401? "" : loading==404? "": [1,2,3,4,5,6].map((c,index)=> <SwiperSlide key={index} style={{
+                margin: "auto",
+                position: "relative",
+                top: centerIndex === index ? "0px" : "48px",
+                width: centerIndex === index ? "224px" : "192px",
+                height: centerIndex === index ? "389px" : "341px",
+                transition: ".7s",
+              }} > <Loading1 /> </SwiperSlide>) }
+        </Swiper>}
+
+        
       </Grid>
     </>
   );

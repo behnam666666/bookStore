@@ -29,6 +29,7 @@ const Homecontent = ({ gridcount, setgridcount, showbooknav  }) => {
     const fetchData = async () => {
       try {
         if (showbooknav) {
+          console.log(showbooknav)
           setloadingbook(false);
           const { data: bookData } = await getBook(showbooknav);
           setbook(bookData);
@@ -37,7 +38,7 @@ const Homecontent = ({ gridcount, setgridcount, showbooknav  }) => {
         }
       } catch (err) {
         setloadingbook(false);
-        console.log("error show book");
+        console.log("error show book" , err.message);
       }
     };
     fetchData();

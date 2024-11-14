@@ -8,6 +8,11 @@ if (TOKEN) {
 }
 // @desc Get All Contacts
 // @route GET http://localhost:9000/contacts
+export const getuser = () => {
+  const url = `${SERVER_URL}/userprofile`;
+  return axios.get(url);
+};
+
 export const getBooks = () => {
   const url = `${SERVER_URL}/getbooks`;
   return axios.get(url);
@@ -16,6 +21,12 @@ export const getnewBooks = () => {
   const url = `${SERVER_URL}/newbooks`;
   return axios.get(url);
 };
+
+export const getrecommendbooks = () => {
+  const url = `${SERVER_URL}/recommendbooksbyrecord`;
+  return axios.get(url);
+};
+
 export const getBook = (bookid) => {
   const url = `${SERVER_URL}/getbook/${bookid}`;
   return axios.get(url);

@@ -14,13 +14,11 @@ import Header from "./Header";
 import Singlebook from "./Singlebook";
 
 import Home from "./Home";
-const Contentpage = ({ newbooks, loading }) => {
+const Contentpage = ({ newbooks,statusnewbooks, loading, recommendbook, statusrecommend }) => {
   const [showbooknav, setshowbooknav] = useState();
   const [viewsinglebook, setviewsinglebook] = useState(false);
   return (
     <>
-      
-
       <Box
         component="div"
         sx={{
@@ -29,31 +27,31 @@ const Contentpage = ({ newbooks, loading }) => {
           padding: "0 22px",
           paddingTop: "22px",
           overflow: "hidden",
-          position:"relative",
-          top:"-90px"
+          position: "relative",
+          top: "-90px",
         }}
       >
         <Grid container sx={{ position: "relative" }}>
-            <motion.div
-              initial={{ y: 100, opacity: 0 }} // شروع از پایین و غیرقابل مشاهده
-              animate={{ y: 0, opacity: 1 }} // انیمیشن به بالا و قابل مشاهده
-              transition={{ duration: 0.5 }} // مدت زمان انیمیشن
-              
-              style={{
-                position: "relative",
-                height: "100%",
-                width: "100%",
-                pointerEvents: "auto",
-              }} // برای نمایش بهتر، موقعیت مطلق داده شده است
-            >
-              <Home
-                newbooks={newbooks}
-                loading={loading}
-                showbooknav={showbooknav}
-                setshowbooknav={setshowbooknav}
-                
-              />
-            </motion.div>
+          <motion.div
+            initial={{ y: 100, opacity: 0 }} // شروع از پایین و غیرقابل مشاهده
+            animate={{ y: 0, opacity: 1 }} // انیمیشن به بالا و قابل مشاهده
+            transition={{ duration: 0.5 }} // مدت زمان انیمیشن
+            style={{
+              position: "relative",
+              height: "100%",
+              width: "100%",
+              pointerEvents: "auto",
+            }} // برای نمایش بهتر، موقعیت مطلق داده شده است
+          >
+            <Home
+              newbooks={newbooks}
+              statusnewbooks={statusnewbooks}
+              showbooknav={showbooknav}
+              setshowbooknav={setshowbooknav}
+              recommendbook={recommendbook}
+              statusrecommend={statusrecommend}
+            />
+          </motion.div>
         </Grid>
       </Box>
     </>
