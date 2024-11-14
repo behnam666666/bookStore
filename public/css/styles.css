@@ -1,0 +1,68 @@
+@font-face {
+  font-family: "vazir";
+  src: url("../fonts/Vazir.eot");
+  src: url("../fonts/Vazir.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/Vazir.woff2") format("woff2"),
+    url("../fonts/Vazir.woff") format("woff"),
+    url("../fonts/Vazir.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "roboto";
+  src: url("../fonts/Roboto-Regular.eot");
+  src: url("../fonts/Roboto-Regular.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/Roboto-Regular.woff2") format("woff2"),
+    url("../fonts/Roboto-Regular.woff") format("woff"),
+    url("../fonts/Roboto-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+@font-face {
+  font-family: 'IRANSansWeb';
+  src: url('../fonts/IRANSansWeb.eot');
+  src: url('../fonts/IRANSansWeb.eot?#iefix') format('embedded-opentype'),
+      url('../fonts/IRANSansWeb.woff2') format('woff2'),
+      url('../fonts/IRANSansWeb.woff') format('woff'),
+      url('../fonts/IRANSansWeb.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'IRANSansWeb','Vazir';
+  background-color: rgba(235, 233, 221, 1);
+  /* color: rgb(173, 172, 166); */
+}
+
+
+.book-content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dd{
+  /* background-color:  linear-gradient(to right , rgba(0,0,0,1)  , rgba(255,255,255,0) ); */
+  /* background: linear-gradient(90deg, rgba(0,0,0,0.2) 0% , rgba(255,255,255,0) 100%); */
+
+  background: linear-gradient(90deg, rgba(0,0,0,0.2) 0% , rgba(255,255,255,0) 100%);
+  position:absolute;right:0; height:100%; width:36px; transform:rotate(180deg);
+  /* z-index: 100; */
+
+}
+
+
+
+
+
+ 
