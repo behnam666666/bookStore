@@ -103,9 +103,9 @@ export const loginUser = async (user) => {
     localStorage.setItem("token", TOKEN);
     axios.defaults.headers.common["Authorization"] = `${TOKEN}`; // هدر Authorization به‌روزرسانی شد
     console.log(TOKEN);
-    return token; // بازگرداندن توکن برای استفاده در کدهای دیگر
+    return response; // بازگرداندن توکن برای استفاده در کدهای دیگر
   } catch (error) {
-    return null;
+    return error;
   }
 };
 

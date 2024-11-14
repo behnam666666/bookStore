@@ -15,6 +15,7 @@ import {
 
 import { useState, useEffect, useRef } from "react";
 
+
 import paperbookeffect from "../../../assets/logo/paperbookeffect.svg";
 import { motion, AnimatePresence } from "framer-motion";
 import { useParams } from "react-router-dom";
@@ -33,7 +34,9 @@ import emoji from "../../../assets/logo/emoji.svg";
 import { p } from "framer-motion/client";
 
 const Singlebook = () => {
-  const [comments, setcomments] = useState();
+  const [statuscomment , setstatuscomment] = useState(404)
+  const [rendercomment , setrendercomment] = useState(true);
+  const [comments, setcomments] = useState(null);
   const [book1, setbook] = useState();
   const [loadingbook, setloadingbook] = useState(true);
   const [loadingcomment, setloadingcomment] = useState(true);
@@ -84,17 +87,45 @@ const Singlebook = () => {
     const fetchData = async () => {
       try {
         setloadingcomment(true);
-        const { data: commentsData } = await getCommentsBook(bookid);
+        
+
+        const { data: commentsData ,status } = await getCommentsBook(bookid);
         setcomments(commentsData);
         console.log(commentsData);
+        setstatuscomment(status)
+
         setloadingcomment(false);
+        console.log(status)
       } catch (err) {
         setloadingcomment(true);
-        console.log("error show book:", err.message);
+        setstatuscomment(err.response.statuse);
+        console.log("error show comment:", err.response.status);
       }
     };
     fetchData();
   }, []);
+  useEffect(() => {
+    const currentScrollY = window.scrollY;
+    const fetchData = async () => {
+      try {
+        setloadingcomment(true);
+        const { data: commentsData , status } = await getCommentsBook(bookid);
+        setcomments(commentsData);
+        console.log(commentsData);
+        setstatuscomment(status);
+
+        setloadingcomment(false);
+        console.log(status)
+
+      } catch (err) {
+        setloadingcomment(true);
+        statuscomment(err.response.status)
+        console.log("error show commetn:", err.message);
+      }
+    };
+    fetchData();
+    window.scrollTo(0,currentScrollY);
+  }, [rendercomment]);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -112,7 +143,7 @@ const Singlebook = () => {
       <Box
         component="div"
         sx={{
-          width: "calc(100% - 150px)",
+          width: "calc(100% - 200px)",
           position: "relative",
           display: "flex",
           justifyContent: "center",
@@ -129,17 +160,19 @@ const Singlebook = () => {
             transition={{ duration: 0.5 }} // مدت زمان انیمیشن
             style={{
               position: "relative",
-              // height: "100%",
-              // width: "100%",
+              height: "100%",
+              width: "100%",
               pointerEvents: "auto",
             }} // برای نمایش بهتر، موقعیت مطلق داده شده است
           >
             <Box
               component="div"
               sx={{
-                width: "95%",
+                width: "100%",
+                
                 bgcolor: "rgba(253, 252, 247, 1)",
                 marginTop: "320px",
+                paddingBottom:"30px",
                 display: "flex",
                 justifyContent: "center",
                 borderRadius: "6px",
@@ -368,6 +401,9 @@ const Singlebook = () => {
                 >
                   {book1.description}
                 </Typography>
+
+          
+
                 <Typography variant="h5" sx={{ marginTop: "15px" }}>
                   ثبت دیدگاه
                 </Typography>
@@ -460,28 +496,59 @@ const Singlebook = () => {
                       right: "17px",
                       bottom: "17px",
                     }}
-                    onClick={() => {
+                    onClick={async () => {
                       inputValue != ""
-                        ? addCommentsBook({
+                        ? await addCommentsBook({
                             review: inputValue,
                             rating: 0,
                             book_id: parseInt(bookid),
                           })
                         : console.log("کامنت خالی");
+                        inputValue != ""
+                        ? setrendercomment(!rendercomment)
+                        : console.log("کامنت خالی");
                       setInputValue("");
+                      
+                      
                     }}
                   >
                     ثبت دیدگاه
                   </Button>
+                
                 </Box>
-                <Box component="div" marginTop={"15px"}>
+                <Box component="div" marginTop={"15px"} width={"100%"} >
                   {/* <p>asdjfalkdjfadsf</p> */}
 
-                  {loadingcomment ? (
-                    <p>1</p>
-                  ) : (
-                    comments.map((c , index) => (
-                      <Box sx={{marginTop:"20px"}} key={index}>
+                  {statuscomment==200 ?
+                  //  (
+                  //   (comments==null? "":
+                  //     comments.slice().reverse().map((c , index) => (
+                  //       <Box sx={{marginTop:"10px" , width:"100%"}} key={index}>
+                  //         <Box sx={{ display: "flex", alignItems: "center" }}>
+                  //           <Box component="img" src={telegram} sx={{width:"50px" , height:"50px"}} />
+                  //           <Typography
+                  //             sx={{
+                  //               fontSize: "16px",
+                  //               fontWeight: "500",
+                  //               mx: "20px",
+                  //             }}
+                  //           >
+                  //             {c.name}
+                  //           </Typography>
+                  //         </Box>
+                  //         <Typography
+                  //           sx={{ fontSize: "14px", fontWeight: "400"  , marginLeft:"70px" }}
+                  //         >
+                  //           {c.comment}
+                  //         </Typography>
+                  //         <hr style={{width:"100%", height:"1px" , background:"rgba(220, 218, 206, 1)" , mx:"auto" , marginTop:"30px", border:"none" , borderRadius:"2px" }}  />
+                  //       </Box>
+                  //     ))
+                  //   )
+                  // )
+                    (
+                    comments.slice().reverse().map((c , index) => (
+                      <Box sx={{marginTop:"10px" , width:"100%"}} key={index}>
                         <Box sx={{ display: "flex", alignItems: "center" }}>
                           <Box component="img" src={telegram} sx={{width:"50px" , height:"50px"}} />
                           <Typography
@@ -495,14 +562,18 @@ const Singlebook = () => {
                           </Typography>
                         </Box>
                         <Typography
-                          sx={{ fontSize: "14px", fontWeight: "400" , marginTop:"10px" , marginLeft:"70px" }}
+                          sx={{ fontSize: "14px", fontWeight: "400"  , marginLeft:"70px" }}
                         >
                           {c.comment}
                         </Typography>
+                        <hr style={{width:"100%", height:"1px" , background:"rgba(220, 218, 206, 1)" , mx:"auto" , marginTop:"30px", border:"none" , borderRadius:"2px" }}  />
                       </Box>
                     ))
-                  )}
+                  ):
+                  <p>اولین نفری باشید که کامنت می گذارید😊</p>}
                 </Box>
+
+              
               </Box>
             </Box>
           </motion.div>

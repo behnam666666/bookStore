@@ -52,10 +52,13 @@ let loginvalue = {
     };
 
   }
-  const loginhandle2 =()=>{
-    loginUser(loginvalue);
-    setloginsucces(true);
-    navigate("/home");
+  const loginhandle2 =async ()=>{
+     const {status} = await loginUser(loginvalue);
+    console.log(status);
+    if(status==200){
+      setloginsucces(true);
+      navigate("/home");
+    }  
   }
 
 
@@ -66,7 +69,7 @@ let loginvalue = {
       try {
         console.log(localStorage.getItem("token"))
         if(localStorage.getItem("token")){
-          setloading(true)
+          setloading(true);
           // const { data: booksData } = await getBooks();
           // setdatabooks(booksData);
           const { data: newbooksData ,status  } = await getBooks();
