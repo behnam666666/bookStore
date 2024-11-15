@@ -16,6 +16,8 @@ import {
   favebook,
 } from "../../../services/contactService";
 
+import { useNavigate } from "react-router-dom";
+
 import { useState, useEffect, useRef } from "react";
 
 import paperbookeffect from "../../../assets/logo/paperbookeffect.svg";
@@ -36,6 +38,8 @@ import emoji from "../../../assets/logo/emoji.svg";
 import { p } from "framer-motion/client";
 
 const Singlebook = () => {
+
+  const navigatesinglebook = useNavigate();
   const [favebookvalue, setfavebookvalue] = useState(404);
   const [statuscomment, setstatuscomment] = useState(404);
   const [rendercomment, setrendercomment] = useState(true);
@@ -211,15 +215,15 @@ const Singlebook = () => {
                 }}
               >
                 <Box>
-                  <Link to={`/home`}>
-                    {" "}
+                 
                     <Button
+                      onClick={()=>{navigatesinglebook(-1)}}
                       variant="contained"
                       sx={{ bgcolor: "rgba(235, 233, 221, 1)" }}
                     >
                       خروج
                     </Button>
-                  </Link>
+                  
                 </Box>
                 <Box sx={{ display: "flex" }}>
                   <Box

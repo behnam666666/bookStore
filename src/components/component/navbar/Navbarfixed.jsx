@@ -19,10 +19,19 @@ import {
   
 import Header from "../home/Header";
 
+import { Link ,useNavigate ,useLocation } from "react-router-dom";
 
 const Navbarfixed = () =>{
+  const location = useLocation();
+  const tabPaths = ["home", "home/books", "save", "settings"];
+  const currentTab = tabPaths.indexOf(location.pathname.replace("/", ""));
+  console.log("currenttab behnam : " , currentTab)
+  console.log(location.pathname.replace("/", ""))
+  const [value, setValue] = useState(currentTab !== -1 ? currentTab : 0);
 
-  const [value, setValue] = useState(0);
+
+  const navigate = useNavigate();
+  
 
   const tabProps = (index) => {
     return {
@@ -83,6 +92,8 @@ const Navbarfixed = () =>{
           >
             {/* <Box component="div" sx={{ width:"35px", height:"35px" , position:"absolute" , bgcolor:"rgba(222, 97, 100, 1)" , borderRadius:"100%" , marginLeft:"27px"}}></Box> */}
             <Tab
+              onClick={()=>{navigate("")}}
+
               icon={
                 <Box
                   component="img"
@@ -93,7 +104,10 @@ const Navbarfixed = () =>{
               }
               {...tabProps(0)}
             />
+            
             <Tab
+              onClick={()=>{navigate("books")}}
+
               icon={
                 <Box
                   component="img"
@@ -104,6 +118,8 @@ const Navbarfixed = () =>{
               }
               {...tabProps(1)}
             />
+            
+            
             {/* <Tab
               icon={
                 <Box

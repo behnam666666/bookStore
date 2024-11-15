@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const SERVER_URL = "http://104.194.149.76";
+const SERVER_URL = "https://bikaransystem.work.gd:8765";
 
 let TOKEN = localStorage.getItem("token");
 if (TOKEN) {

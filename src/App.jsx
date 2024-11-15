@@ -15,10 +15,11 @@ import {
   getrecommendbooks,
 } from "./services/contactService";
 import Navbarfixed from "./components/component/navbar/Navbarfixed";
+import Books from "./components/component/books/Books";
 
 import Singlebook from "./components/component/home/Singlebook";
 function App() {
-  const [databooks, setdatabooks] = useState({});
+  // const [databooks, setdatabooks] = useState({});
   const [newbooks, setnewbooks] = useState();
   const [statusnewbooks , setstatusnewbooks]= useState();
   const [recommendbook , setrecommendbook] = useState();
@@ -185,6 +186,14 @@ function App() {
           }
         >
           <Route
+            path="books"
+            element={
+              <>
+                <Books />
+              </>
+            }
+          ></Route>
+          <Route
             path=""
             element={
               <>
@@ -200,6 +209,7 @@ function App() {
               </>
             }
           ></Route>
+          
         </Route>
       </Routes>
     </MainLayout>
