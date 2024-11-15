@@ -37,12 +37,27 @@ export const getCommentsBook = (bookid) => {
   return axios.get(url);
 };
 
+export const addratebook = (bookid) => {
+  const url = `${SERVER_URL}/ratebook`;
+  return axios.post(url,bookid);
+};
+
 export const addCommentsBook = (comments) => {
   const url = `${SERVER_URL}/commentbook`;
   console.log(comments)
   return axios.post(url , comments );
 };
 
+export const favebook = (bookid) => {
+  const url = `${SERVER_URL}/fave`;
+  console.log(bookid);
+  return axios.post(url , {"book_id" :parseInt(bookid)} );
+};
+export const favecheckbook = (bookid) => {
+  const url = `${SERVER_URL}/favecheck/${bookid}`;
+  console.log("bookid favecheck :" , bookid)
+  return axios.get(url);
+};
 
 // @desc Get Contact With Contact ID
 // @route GET http://localhost:9000/contacts/:contactId

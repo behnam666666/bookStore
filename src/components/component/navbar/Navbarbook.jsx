@@ -100,6 +100,7 @@ const Navbarbook = ({ gridcount, setgridcount, newbooks, loading , titlenav , se
                 transition: "height  width .7s",
               }}
             >
+              
               <Box
                 sx={{
                   display: "flex",
@@ -183,7 +184,7 @@ const Navbarbook = ({ gridcount, setgridcount, newbooks, loading , titlenav , se
                         variant="caption"
                         sx={{ color: "Red", fontSize: "12px" }}
                       >
-                        {book.rate}
+                        {(book.rate).toFixed(1)}
                       </Typography>
                       <Box
                         component="img"

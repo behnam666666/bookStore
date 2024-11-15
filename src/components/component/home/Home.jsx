@@ -55,7 +55,7 @@ const Home = ({ newbooks, statusnewbooks ,showbooknav, setshowbooknav , recommen
         setgridcount={setgridcount}
         newbooks={recommendbook}
         loading={statusrecommend}
-        titlenav={"پیشنهاد بر اساس علایق شما"}
+        titlenav={"پیشنهاد بر اساس سوابق"}
       />
       {/* <Navbarbook
         setshowbooknav={setshowbooknav}

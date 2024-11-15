@@ -11,10 +11,12 @@ import {
   getBook,
   getCommentsBook,
   addCommentsBook,
+  addratebook,
+  favecheckbook,
+  favebook,
 } from "../../../services/contactService";
 
 import { useState, useEffect, useRef } from "react";
-
 
 import paperbookeffect from "../../../assets/logo/paperbookeffect.svg";
 import { motion, AnimatePresence } from "framer-motion";
@@ -34,8 +36,9 @@ import emoji from "../../../assets/logo/emoji.svg";
 import { p } from "framer-motion/client";
 
 const Singlebook = () => {
-  const [statuscomment , setstatuscomment] = useState(404)
-  const [rendercomment , setrendercomment] = useState(true);
+  const [favebookvalue, setfavebookvalue] = useState(404);
+  const [statuscomment, setstatuscomment] = useState(404);
+  const [rendercomment, setrendercomment] = useState(true);
   const [comments, setcomments] = useState(null);
   const [book1, setbook] = useState();
   const [loadingbook, setloadingbook] = useState(true);
@@ -49,6 +52,7 @@ const Singlebook = () => {
 
   const customEmojis = ["😀", "😂", "😍", "👍", "🔥", "💯", "✌️", "❤️"];
   const textFieldRef = useRef(null);
+  const [ratingValue, setRatingValue] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const handleEmojiClick = (emojiData) => {
     setInputValue((prev) => prev + emojiData); // اضافه کردن ایموجی به مقدار TextField
@@ -71,6 +75,20 @@ const Singlebook = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const { status } = await favecheckbook(bookid);
+        // setfavebookvalue(status)
+        console.log("status bookcheck : ", status);
+        setfavebookvalue(status);
+      } catch (err) {
+        console.log("error show favecheck ", err.response.status);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
         setloadingbook(true);
         const { data: bookData } = await getBook(bookid);
         setbook(bookData);
@@ -87,15 +105,14 @@ const Singlebook = () => {
     const fetchData = async () => {
       try {
         setloadingcomment(true);
-        
 
-        const { data: commentsData ,status } = await getCommentsBook(bookid);
+        const { data: commentsData, status } = await getCommentsBook(bookid);
         setcomments(commentsData);
         console.log(commentsData);
-        setstatuscomment(status)
+        setstatuscomment(status);
 
         setloadingcomment(false);
-        console.log(status)
+        console.log(status);
       } catch (err) {
         setloadingcomment(true);
         setstatuscomment(err.response.statuse);
@@ -109,22 +126,21 @@ const Singlebook = () => {
     const fetchData = async () => {
       try {
         setloadingcomment(true);
-        const { data: commentsData , status } = await getCommentsBook(bookid);
+        const { data: commentsData, status } = await getCommentsBook(bookid);
         setcomments(commentsData);
         console.log(commentsData);
         setstatuscomment(status);
 
         setloadingcomment(false);
-        console.log(status)
-
+        console.log(status);
       } catch (err) {
         setloadingcomment(true);
-        statuscomment(err.response.status)
+        statuscomment(err.response.status);
         console.log("error show commetn:", err.message);
       }
     };
     fetchData();
-    window.scrollTo(0,currentScrollY);
+    window.scrollTo(0, currentScrollY);
   }, [rendercomment]);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -169,10 +185,10 @@ const Singlebook = () => {
               component="div"
               sx={{
                 width: "100%",
-                
+
                 bgcolor: "rgba(253, 252, 247, 1)",
                 marginTop: "320px",
-                paddingBottom:"30px",
+                paddingBottom: "30px",
                 display: "flex",
                 justifyContent: "center",
                 borderRadius: "6px",
@@ -205,24 +221,72 @@ const Singlebook = () => {
                     </Button>
                   </Link>
                 </Box>
-                <Box>
+                <Box sx={{ display: "flex" }}>
                   <Box
-                    component="img"
-                    src={share}
                     sx={{
-                      width: 30,
-                      height: 30,
-                      padding: "10px",
-                      borderRadius: "100%",
+                      borderRadius: "100px",
                       bgcolor: "rgba(235, 233, 221, 1)",
-                      cursor: "pointer",
                       marginRight: "24px",
+                      width: isMenuOpen? "300px" : "50px",
+                      height: "50px",
+                      padding: "0px",
+                      display: "flex",
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                      overflow:"hidden",
+                      transition:".5s ease"
+                      
                     }}
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  />
+                  >
+                    
+                    <Button
+                      endIcon={<Box component="img" src={symbols_save} />}
+                      onClick={copyLinkToClipboard}
+                    ></Button>
+                    <a
+                      href={`https://telegram.me/share/url?url=${shareLink}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button
+                        endIcon={<Box component="img" src={telegram} />}
+                      ></Button>
+                    </a>
+                    <a
+                      href={`https://wa.me/?text=${shareLink}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button
+                        endIcon={<Box component="img" src={whatsappl} />}
+                      ></Button>
+                    </a>
+                    <a
+                      href={`https://twitter.com/share?url=${shareLink}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Button
+                        endIcon={<Box component="img" src={twitter} />}
+                      ></Button>
+                    </a>
+
+                    <Box
+                      component="img"
+                      src={share}
+                      sx={{
+                        width: 30,
+                        height: 30,
+                        padding: "10px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    />
+                  </Box>
+
                   <Box
                     component="img"
-                    src={savedone ? savefilled : save}
+                    src={favebookvalue == 200 ? savefilled : save}
                     sx={{
                       width: 30,
                       height: 30,
@@ -231,61 +295,13 @@ const Singlebook = () => {
                       bgcolor: "rgba(235, 233, 221, 1)",
                       cursor: "pointer",
                     }}
-                    onClick={() => {
-                      setsavedone(!savedone);
+                    onClick={async () => {
+                      setfavebookvalue(favebookvalue == 200 ? 404 : 200);
+                      await favebook(bookid);
                     }}
                   />
                 </Box>
-                <AnimatePresence>
-                  {isMenuOpen && (
-                    <motion.div
-                      key="animatedDiv"
-                      initial={{ y: 0, opacity: 0 }} // شروع از پایین و غیرقابل مشاهده
-                      animate={{ y: 0, opacity: 1 }} // انیمیشن به بالا و قابل مشاهده
-                      exit={{ opacity: 0, y: 0 }} // انیمیشن بازگشت به پایین و ناپدید شدن
-                      transition={{ duration: 0.5 }} // مدت زمان انیمیشن
-                      style={{
-                        position: "absolute",
-                        pointerEvents: "auto",
-                        zIndex: "-20",
-                        left: "150px",
-                        top: "5px",
-                      }} // برای نمایش بهتر، موقعیت مطلق داده شده است
-                    >
-                      <Button
-                        endIcon={<Box component="img" src={symbols_save} />}
-                        onClick={copyLinkToClipboard}
-                      ></Button>
-                      <a
-                        href={`https://telegram.me/share/url?url=${shareLink}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Button
-                          endIcon={<Box component="img" src={telegram} />}
-                        ></Button>
-                      </a>
-                      <a
-                        href={`https://wa.me/?text=${shareLink}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Button
-                          endIcon={<Box component="img" src={whatsappl} />}
-                        ></Button>
-                      </a>
-                      <a
-                        href={`https://twitter.com/share?url=${shareLink}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Button
-                          endIcon={<Box component="img" src={twitter} />}
-                        ></Button>
-                      </a>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+               
               </Box>
 
               <Box
@@ -402,8 +418,6 @@ const Singlebook = () => {
                   {book1.description}
                 </Typography>
 
-          
-
                 <Typography variant="h5" sx={{ marginTop: "15px" }}>
                   ثبت دیدگاه
                 </Typography>
@@ -469,6 +483,10 @@ const Singlebook = () => {
 
                   <Rating
                     precision={1}
+                    onChange={(event, newValue) => {
+                      setRatingValue(newValue);
+                    }}
+                    value={ratingValue}
                     sx={{
                       position: "absolute",
                       right: "17px",
@@ -504,76 +522,107 @@ const Singlebook = () => {
                             book_id: parseInt(bookid),
                           })
                         : console.log("کامنت خالی");
-                        inputValue != ""
+                      console.log(ratingValue);
+
+                      ratingValue == 0
+                        ? console.log("rating khali")
+                        : await addratebook({
+                            book_id: parseInt(bookid),
+                            rating: parseInt(ratingValue),
+                            review: "یبیتیبتببلیلیبلیلب",
+                          });
+
+                      inputValue != ""
                         ? setrendercomment(!rendercomment)
                         : console.log("کامنت خالی");
+
                       setInputValue("");
-                      
-                      
+                      setRatingValue(0);
                     }}
                   >
                     ثبت دیدگاه
                   </Button>
-                
                 </Box>
-                <Box component="div" marginTop={"15px"} width={"100%"} >
+                <Box component="div" marginTop={"15px"} width={"100%"}>
                   {/* <p>asdjfalkdjfadsf</p> */}
 
-                  {statuscomment==200 ?
-                  //  (
-                  //   (comments==null? "":
-                  //     comments.slice().reverse().map((c , index) => (
-                  //       <Box sx={{marginTop:"10px" , width:"100%"}} key={index}>
-                  //         <Box sx={{ display: "flex", alignItems: "center" }}>
-                  //           <Box component="img" src={telegram} sx={{width:"50px" , height:"50px"}} />
-                  //           <Typography
-                  //             sx={{
-                  //               fontSize: "16px",
-                  //               fontWeight: "500",
-                  //               mx: "20px",
-                  //             }}
-                  //           >
-                  //             {c.name}
-                  //           </Typography>
-                  //         </Box>
-                  //         <Typography
-                  //           sx={{ fontSize: "14px", fontWeight: "400"  , marginLeft:"70px" }}
-                  //         >
-                  //           {c.comment}
-                  //         </Typography>
-                  //         <hr style={{width:"100%", height:"1px" , background:"rgba(220, 218, 206, 1)" , mx:"auto" , marginTop:"30px", border:"none" , borderRadius:"2px" }}  />
-                  //       </Box>
-                  //     ))
-                  //   )
-                  // )
-                    (
-                    comments.slice().reverse().map((c , index) => (
-                      <Box sx={{marginTop:"10px" , width:"100%"}} key={index}>
-                        <Box sx={{ display: "flex", alignItems: "center" }}>
-                          <Box component="img" src={telegram} sx={{width:"50px" , height:"50px"}} />
+                  {statuscomment == 200 ? (
+                    //  (
+                    //   (comments==null? "":
+                    //     comments.slice().reverse().map((c , index) => (
+                    //       <Box sx={{marginTop:"10px" , width:"100%"}} key={index}>
+                    //         <Box sx={{ display: "flex", alignItems: "center" }}>
+                    //           <Box component="img" src={telegram} sx={{width:"50px" , height:"50px"}} />
+                    //           <Typography
+                    //             sx={{
+                    //               fontSize: "16px",
+                    //               fontWeight: "500",
+                    //               mx: "20px",
+                    //             }}
+                    //           >
+                    //             {c.name}
+                    //           </Typography>
+                    //         </Box>
+                    //         <Typography
+                    //           sx={{ fontSize: "14px", fontWeight: "400"  , marginLeft:"70px" }}
+                    //         >
+                    //           {c.comment}
+                    //         </Typography>
+                    //         <hr style={{width:"100%", height:"1px" , background:"rgba(220, 218, 206, 1)" , mx:"auto" , marginTop:"30px", border:"none" , borderRadius:"2px" }}  />
+                    //       </Box>
+                    //     ))
+                    //   )
+                    // )
+                    comments
+                      .slice()
+                      .reverse()
+                      .map((c, index) => (
+                        <Box
+                          sx={{ marginTop: "10px", width: "100%" }}
+                          key={index}
+                        >
+                          <Box sx={{ display: "flex", alignItems: "center" }}>
+                            <Box
+                              component="img"
+                              src={telegram}
+                              sx={{ width: "50px", height: "50px" }}
+                            />
+                            <Typography
+                              sx={{
+                                fontSize: "16px",
+                                fontWeight: "500",
+                                mx: "20px",
+                              }}
+                            >
+                              {c.name}
+                            </Typography>
+                          </Box>
                           <Typography
                             sx={{
-                              fontSize: "16px",
-                              fontWeight: "500",
-                              mx: "20px",
+                              fontSize: "14px",
+                              fontWeight: "400",
+                              marginLeft: "70px",
                             }}
                           >
-                            {c.name}
+                            {c.comment}
                           </Typography>
+                          <hr
+                            style={{
+                              width: "100%",
+                              height: "1px",
+                              background: "rgba(220, 218, 206, 1)",
+                              mx: "auto",
+                              marginTop: "30px",
+                              border: "none",
+                              borderRadius: "2px",
+                            }}
+                          />
                         </Box>
-                        <Typography
-                          sx={{ fontSize: "14px", fontWeight: "400"  , marginLeft:"70px" }}
-                        >
-                          {c.comment}
-                        </Typography>
-                        <hr style={{width:"100%", height:"1px" , background:"rgba(220, 218, 206, 1)" , mx:"auto" , marginTop:"30px", border:"none" , borderRadius:"2px" }}  />
-                      </Box>
-                    ))
-                  ):
-                  <p>اولین نفری باشید که کامنت می گذارید😊</p>}
+                      ))
+                  ) : (
+                    <p>اولین نفری باشید که کامنت می گذارید😊</p>
+                  )}
                 </Box>
-
-              
               </Box>
             </Box>
           </motion.div>
