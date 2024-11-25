@@ -11,7 +11,7 @@ import plusIcon from "../../../assets/logo/plus.svg"
 import { filterSearchapi } from "../../../services/contactService";
 
 
-const Search =()=>{
+const Search =({filterSearch,setfilterSearch,fetchDatafilter})=>{
 
 
     
@@ -26,14 +26,7 @@ const [valuecomic , setvaluecomic] = useState(false);
 const [valueyoung , setvalueyoung] = useState(false);
 const [valuenonfiction , setvaluenonfiction] = useState(false);
 
-const [filterSearch , setfilterSearch] = useState({
-    "genres":[],
-    "start_date":1300,
-    "end_date":2024,
-    "search":"",
-    "min_pages":0,
-    "max_pages":1000,
-})
+
 
 const handleSearchText = (event)=>{
     setfilterSearch( {...filterSearch, "search":event.target.value})
@@ -54,7 +47,7 @@ const handlegenres =(event)=>{
 
 
 const handlesubmitsearch = ()=>{
-    filterSearchapi(filterSearch)
+    fetchDatafilter();
 }
 
 
@@ -120,15 +113,18 @@ const handleChangedateform = (event, newValue, activeThumb) => {
         <>
         <Grid
               size={5}
-              sx={{
-                height: "490px",
+            >
+                <Box component="div" sx={{ 
                 bgcolor: "rgba(253, 252, 247, 1)",
                 borderRadius: "12px",
                 border: "none",
                 display: "flex",
-                justifyContent: "center",
-              }}
-            >
+                justifyContent: "start",
+                alignItems:"center",
+                flexDirection:"column",
+                width:"100%" , paddingBottom:"15px"}}>
+
+               
               <Box sx={{ width: "90%" }}>
                 <Box
                   sx={{
@@ -194,7 +190,7 @@ const handleChangedateform = (event, newValue, activeThumb) => {
                 <Typography variant="subtitle1" sx={{ margin: "20px 0 8px 0" }}>
                   دسته بندی:
                 </Typography>
-                <Box component="div" sx={{width:"100%" , height:"100px" , display:"flex" , flexWrap:"wrap" , gap:"5px"}}>
+                <Box component="div" sx={{width:"100%"  , display:"flex" , flexWrap:"wrap" , gap:"5px"}}>
                   <Box id="history, historical fiction, biography" onClick={(event)=>{setvaluehistorical(!valuehistorical); handlegenres(event)}}  component="div" sx={{cursor:"pointer", borderRadius:"33px", border:valuehistorical?"1px solid rgba(44, 44, 44, 1)":"1px solid rgba(138, 138, 138, 1)", bgcolor:valuehistorical? "rgba(44, 44, 44, 1)":"rgba(253, 252, 247, 1)" , paddingX:"12px" , display:"flex", justifyContent:"center" , alignItems:"center" , height:"32px" , transition:".3s" }}>
                     <Typography sx={{fontSize:"16px" , fontWeight:"500" , color:valuehistorical?"rgba(253, 252, 247, 1)" : "rgba(138, 138, 138, 1)" , transition:".3s"}}>تاریخی</Typography>
                     <Box component="img" src={plusIcon} sx={{fontSize:"18px" , fontWeight:"500" ,filter:valuehistorical? "invert(1)":"invert(.6)" , marginLeft:"4px" , transition:".3s" , transform:valuehistorical?"rotate(45deg)" : "rotate(0deg)",transformOrigin:"center"}}></Box>
@@ -235,6 +231,15 @@ const handleChangedateform = (event, newValue, activeThumb) => {
                     <Typography sx={{fontSize:"16px" , fontWeight:"500" , color:valuenonfiction?"rgba(253, 252, 247, 1)" : "rgba(138, 138, 138, 1)" , transition:".3s"}}>غیرداستانی</Typography>
                     <Box component="img" src={plusIcon} sx={{fontSize:"18px" , fontWeight:"500" ,filter:valuenonfiction? "invert(1)":"invert(.6)" , marginLeft:"4px" , transition:".3s" , transform:valuenonfiction?"rotate(45deg)" : "rotate(0deg)",transformOrigin:"center"}}></Box>
                   </Box>
+                  <Box id="non-fiction" onClick={(event)=>{setvaluenonfiction(!valuenonfiction);handlegenres(event)}}  component="div" sx={{cursor:"pointer", borderRadius:"33px", border:valuenonfiction?"1px solid rgba(44, 44, 44, 1)":"1px solid rgba(138, 138, 138, 1)", bgcolor:valuenonfiction? "rgba(44, 44, 44, 1)":"rgba(253, 252, 247, 1)" , paddingX:"12px" , display:"flex", justifyContent:"center" , alignItems:"center" , height:"32px" , transition:".3s" }}>
+                    <Typography sx={{fontSize:"16px" , fontWeight:"500" , color:valuenonfiction?"rgba(253, 252, 247, 1)" : "rgba(138, 138, 138, 1)" , transition:".3s"}}>غیرداستانی</Typography>
+                    <Box component="img" src={plusIcon} sx={{fontSize:"18px" , fontWeight:"500" ,filter:valuenonfiction? "invert(1)":"invert(.6)" , marginLeft:"4px" , transition:".3s" , transform:valuenonfiction?"rotate(45deg)" : "rotate(0deg)",transformOrigin:"center"}}></Box>
+                  </Box>
+                  <Box id="non-fiction" onClick={(event)=>{setvaluenonfiction(!valuenonfiction);handlegenres(event)}}  component="div" sx={{cursor:"pointer", borderRadius:"33px", border:valuenonfiction?"1px solid rgba(44, 44, 44, 1)":"1px solid rgba(138, 138, 138, 1)", bgcolor:valuenonfiction? "rgba(44, 44, 44, 1)":"rgba(253, 252, 247, 1)" , paddingX:"12px" , display:"flex", justifyContent:"center" , alignItems:"center" , height:"32px" , transition:".3s" }}>
+                    <Typography sx={{fontSize:"16px" , fontWeight:"500" , color:valuenonfiction?"rgba(253, 252, 247, 1)" : "rgba(138, 138, 138, 1)" , transition:".3s"}}>غیرداستانی</Typography>
+                    <Box component="img" src={plusIcon} sx={{fontSize:"18px" , fontWeight:"500" ,filter:valuenonfiction? "invert(1)":"invert(.6)" , marginLeft:"4px" , transition:".3s" , transform:valuenonfiction?"rotate(45deg)" : "rotate(0deg)",transformOrigin:"center"}}></Box>
+                  </Box>
+                  
 
                 </Box>
 
@@ -352,6 +357,7 @@ const handleChangedateform = (event, newValue, activeThumb) => {
                 
 
                 <Button fullWidth onClick={handlesubmitsearch} sx={{backgroundColor:"rgba(44, 44, 44, 1)" , color:"white" , height:"46px" , borderRadius:"12px", marginTop:"30px"}}>اعمال فیلتر</Button>
+              </Box>
               </Box>
             </Grid>
         </>

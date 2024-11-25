@@ -16,14 +16,14 @@ import {
 } from "./services/contactService";
 import Navbarfixed from "./components/component/navbar/Navbarfixed";
 import Books from "./components/component/books/Books";
-
+import Savebooks from "./components/component/savebooks/Savebooks";
 import Singlebook from "./components/component/home/Singlebook";
 function App() {
   // const [databooks, setdatabooks] = useState({});
   const [newbooks, setnewbooks] = useState();
-  const [statusnewbooks , setstatusnewbooks]= useState();
-  const [recommendbook , setrecommendbook] = useState();
-  const [statusrecommend , setstatusrecommend] = useState();
+  const [statusnewbooks, setstatusnewbooks] = useState();
+  const [recommendbook, setrecommendbook] = useState();
+  const [statusrecommend, setstatusrecommend] = useState();
   const [loginsucces, setloginsucces] = useState(false);
   const [loading, setloading] = useState(true);
   const navigate = useNavigate();
@@ -59,7 +59,7 @@ function App() {
   };
   const loginhandle2 = async () => {
     const { status } = await loginUser(loginvalue);
-    console.log("kir")
+    console.log("kir");
     console.log(status);
     if (status == 200) {
       setloginsucces(true);
@@ -71,16 +71,13 @@ function App() {
     const fetchData = async () => {
       try {
         console.log(localStorage.getItem("token"));
-        
-         
-          const { data, status } = await getnewBooks();
-          setnewbooks(data);
-          console.log("ketab new :" , newbooks)
-          setstatusnewbooks(status)
-      
-        
+
+        const { data, status } = await getnewBooks();
+        setnewbooks(data);
+        console.log("ketab new :", newbooks);
+        setstatusnewbooks(status);
       } catch (err) {
-        setstatusnewbooks(err.response.status)
+        setstatusnewbooks(err.response.status);
         if (err.response) {
           const { status } = err.response;
           console.error(`Request failed with status 89: ${status}`);
@@ -96,15 +93,12 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        
-          const { data, status } = await getnewBooks();
-          setnewbooks(data);
-          console.log(newbooks);
-          setstatusnewbooks(status)
-
-        
+        const { data, status } = await getnewBooks();
+        setnewbooks(data);
+        console.log(newbooks);
+        setstatusnewbooks(status);
       } catch (err) {
-        setstatusnewbooks(err.response.status)
+        setstatusnewbooks(err.response.status);
 
         if (err.response) {
           const { status } = err.response;
@@ -122,14 +116,12 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        
-          const { data, status } = await getrecommendbooks();
-          setrecommendbook(data);
-          setstatusrecommend(status)
-          console.log("recommend book :" , data);
-          
+        const { data, status } = await getrecommendbooks();
+        setrecommendbook(data);
+        setstatusrecommend(status);
+        console.log("recommend book :", data);
       } catch (err) {
-        setstatusrecommend(err.response.status)
+        setstatusrecommend(err.response.status);
         if (err.response) {
           const { status } = err.response;
           console.error(`recommend : ${status}`);
@@ -143,14 +135,12 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        
-          const { data, status } = await getrecommendbooks();
-          setrecommendbook(data);
-          setstatusrecommend(status)
-          console.log("recommend book :" , data);
-          
+        const { data, status } = await getrecommendbooks();
+        setrecommendbook(data);
+        setstatusrecommend(status);
+        console.log("recommend book :", data);
       } catch (err) {
-        setstatusrecommend(err.response.status)
+        setstatusrecommend(err.response.status);
         if (err.response) {
           const { status } = err.response;
           console.error(`recommend : ${status}`);
@@ -161,7 +151,6 @@ function App() {
     };
     fetchData();
   }, []);
-
 
   return (
     <MainLayout>
@@ -194,11 +183,17 @@ function App() {
               </>
             }
           ></Route>
+
           <Route
             path=""
             element={
               <>
-                <Contentpage newbooks={newbooks} statusnewbooks={statusnewbooks} recommendbook={recommendbook} statusrecommend={statusrecommend} />{" "}
+                <Contentpage
+                  newbooks={newbooks}
+                  statusnewbooks={statusnewbooks}
+                  recommendbook={recommendbook}
+                  statusrecommend={statusrecommend}
+                />{" "}
               </>
             }
           ></Route>
@@ -210,7 +205,11 @@ function App() {
               </>
             }
           ></Route>
-          
+          <Route path="save" element={<Savebooks />}>
+
+          </Route>
+
+
         </Route>
       </Routes>
     </MainLayout>

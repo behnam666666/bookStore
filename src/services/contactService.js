@@ -153,12 +153,15 @@ export const logoutUser = () => {
 export const filterSearchapi = (filter) => {
   const url = `${SERVER_URL}/filterbooks`;
   console.log(filter);
-  return axios
-  .post(url, filter)
-  .then((response) => {
-    console.log(response.data);
-  })
-  .catch((error) => {
-    console.error("There was an error!", error);
-  });
+  return axios.post(url, filter)
+  
+  
 };
+
+export const savebooks = () => {
+  const url = `${SERVER_URL}/getfavebooks`;
+  return axios.get(url)
+  
+  
+};
+

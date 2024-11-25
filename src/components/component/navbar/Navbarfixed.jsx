@@ -23,7 +23,7 @@ import { Link ,useNavigate ,useLocation } from "react-router-dom";
 
 const Navbarfixed = () =>{
   const location = useLocation();
-  const tabPaths = ["home", "home/books", "save", "settings"];
+  const tabPaths = ["home", "home/books", "home/save", "settings"];
   const currentTab = tabPaths.indexOf(location.pathname.replace("/", ""));
   console.log("currenttab behnam : " , currentTab)
   console.log(location.pathname.replace("/", ""))
@@ -132,6 +132,7 @@ const Navbarfixed = () =>{
               {...tabProps(2)}
             /> */}
             <Tab
+            onClick={()=>{navigate("save")}}
               icon={
                 <Box
                   component="img"

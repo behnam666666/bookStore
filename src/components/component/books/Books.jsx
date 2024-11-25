@@ -7,30 +7,33 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import paperbookeffect from "../../../assets/logo/paperbookeffect.svg";
-import search from "../../../assets/logo/search.svg";
+
 import stars from "../../../assets/logo/stars.svg";
-import { getBooks } from "../../../services/contactService";
+import { getBooks, filterSearchapi } from "../../../services/contactService";
 import Pagination from "@mui/material/Pagination";
 
-import Loadingveiwbook1 from "../loading/Loadingveiwbook1";
 import Loadingbooks from "../loading/Loadingbooks";
 import Search from "../search/Search";
 
-import plusIcon from "../../../assets/logo/plus.svg"
 
-function valuetext(value) {
-  return `${value}°C`;
-}
+
 
 const Books = () => {
-
-  
+  const [filterSearch, setfilterSearch] = useState({
+    genres: [],
+    start_date: 1300,
+    end_date: 2024,
+    search: "",
+    min_pages: 0,
+    max_pages: 1000,
+  });
 
   const navigatebooks = useNavigate();
 
   const [currentPage, setCurrentPage] = useState(1); // صفحه فعلی
   const itemsPerPage = 16; // تعداد آیتم‌های هر صفحه
 
+  const [booksfilter, setbooksfilter] = useState();
   const [books, setbooks] = useState();
   const [statusbooks, setstatusbooks] = useState(404);
 
@@ -54,6 +57,24 @@ const Books = () => {
     };
     fetchData();
   }, []);
+
+  const fetchDatafilter = async () => {
+    try {
+      setstatusbooks(404)
+      const { data, status } = await filterSearchapi(filterSearch);
+      setbooks(data);
+      setstatusbooks(status);
+      console.log(status, data);
+    } catch (err) {
+      setstatusbooks(err.response.status);
+      if (err.response) {
+        const { status } = err.response;
+        console.error(`error books: ${status}`);
+      } else {
+        console.error("error books:", err.message);
+      }
+    }
+  };
 
   let totalPages;
   let startIndex;
@@ -229,10 +250,13 @@ const Books = () => {
                     </Grid>
                   ))}
             </Grid>
-            
-            <Search />
 
-            
+            <Search
+              filterSearch={filterSearch}
+              setfilterSearch={setfilterSearch}
+              fetchDatafilter={fetchDatafilter}
+            />
+
             <Grid size={11} sx={{ display: "flex", justifyContent: "center" }}>
               {statusbooks == 200 ? (
                 <Box
