@@ -14,48 +14,17 @@ import Pagination from "@mui/material/Pagination";
 
 import Loadingveiwbook1 from "../loading/Loadingveiwbook1";
 import Loadingbooks from "../loading/Loadingbooks";
+import Search from "../search/Search";
+
+import plusIcon from "../../../assets/logo/plus.svg"
 
 function valuetext(value) {
   return `${value}°C`;
 }
 
 const Books = () => {
-  const [valuedateform, setValuedateform] = useState([1300, 2024]);
-  const [valuepaperform, setValuepaperform] = useState([0, 1000]);
-  const handleChangepaperform = (event, newValue, activeThumb) => {
-    if (!Array.isArray(newValue)) {
-      return;
-    }
 
-    if (activeThumb === 0) {
-      setValuepaperform([
-        Math.min(newValue[0], valuepaperform[1] - 50),
-        valuepaperform[1],
-      ]);
-    } else {
-      setValuepaperform([
-        valuepaperform[0],
-        Math.max(newValue[1], valuepaperform[0] + 50),
-      ]);
-    }
-  };
-  const handleChangedateform = (event, newValue, activeThumb) => {
-    if (!Array.isArray(newValue)) {
-      return;
-    }
-
-    if (activeThumb === 0) {
-      setValuedateform([
-        Math.min(newValue[0], valuedateform[1] - 50),
-        valuedateform[1],
-      ]);
-    } else {
-      setValuedateform([
-        valuedateform[0],
-        Math.max(newValue[1], valuedateform[0] + 50),
-      ]);
-    }
-  };
+  
 
   const navigatebooks = useNavigate();
 
@@ -260,199 +229,10 @@ const Books = () => {
                     </Grid>
                   ))}
             </Grid>
-            <Grid
-              size={5}
-              sx={{
-                height: "490px",
-                bgcolor: "rgba(253, 252, 247, 1)",
-                borderRadius: "12px",
-                border: "none",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Box sx={{ width: "90%" }}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginTop: "15px",
-                  }}
-                >
-                  <Box
-                    component="img"
-                    src={search}
-                    alt="Home Icon"
-                    sx={{
-                      marginRight: "-15px",
-                      position: "relative",
-                      zIndex: "1",
-                      width: 24,
-                      height: 24,
-                      backgroundColor: "rgba(253, 252, 247, 1)",
-                      padding: "6.5px",
-                      border: "2px solid rgba(220, 218, 206, 1)",
-                      borderRight: "none",
-                      borderRadius: "  12px 0 0 12px",
-                    }}
-                  />
+            
+            <Search />
 
-                  <TextField
-                    size="small"
-                    id="outlined-textarea"
-                    placeholder="جستجو روی فیلتر انجام شده،...."
-                    sx={{
-                      width: "100%",
-                      backgroundColor: "rgba(253, 252, 247, 1)",
-                      border: " 2px solid rgba(220, 218, 206, 1)",
-                      borderRadius: "12px",
-                      "& .MuiOutlinedInput-root": {
-                        "& fieldset": { borderRadius: "12px" },
-                        "&:hover fieldset": {
-                          border: "none",
-                        },
-                        "&.Mui-focused fieldset": {
-                          borderColor: "rgba(138, 138, 138, 1)",
-                          borderWidth: 0,
-                        },
-                        "& input": {
-                          color: "rgba(138, 138, 138, 1)",
-                          fontSize: "14px",
-                        },
-                      },
-                      "& .MuiInputLabel-root": {
-                        color: "rgba(138, 138, 138, 1)", // تغییر رنگ label
-                        fontSize: "14px",
-                        "&.Mui-focused": {
-                          color: "rgba(138, 138, 138, 1)", // تغییر رنگ label در حالت فوکوس
-                          fontSize: "14px",
-                        },
-                      },
-                    }}
-                  />
-                </Box>
-                <Typography variant="subtitle1" sx={{ margin: "20px 0 8px 0" }}>
-                  دسته بندی:
-                </Typography>
-
-                <Typography variant="subtitle1" sx={{ margin: "20px 0 8px 0" }}>
-                  تاریخ انتشار:
-                </Typography>
-                <Box sx={{width:"100%" , display:"flex" , justifyContent:"center"}}>
-                <Slider
-                  min={1300}
-                  max={2024}
-                  step={50}
-                  marks
-                  getAriaLabel={() => "Temperature range"}
-                  value={valuedateform}
-                  onChange={handleChangedateform}
-                  valueLabelDisplay="on"
-                  //   getAriaValueText={valuetext}
-
-                  sx={{
-                    width:"calc(100% - 20px)",
-                    color: "rgba(44, 44, 44, 1)", // رنگ اصلی اسلایدر
-                    "& .MuiSlider-thumb": {
-                      "&:hover, &:focus, &.Mui-active": {
-                        boxShadow: "none", // حذف سایه هاور
-                      },
-                      backgroundColor: "rgba(44, 44, 44, 1)", // رنگ دستگیره
-                      border: "none", // استایل دستگیره
-                    },
-                    "& .MuiSlider-track": {
-                      height: "6px",
-                      backgroundColor: "rgba(44, 44, 44, 1)", // رنگ خط پر شده
-                    },
-                    "& .MuiSlider-rail": {
-                      height: "6px",
-
-                      backgroundColor: "DarkBackground", // رنگ خط خالی
-                    },
-                    "& .MuiSlider-mark": {
-                      backgroundColor: "rgba(44, 44, 44, 1)", // رنگ مارکرها
-                      height: "2px",
-                      width: "2px",
-                      borderRadius: "50%",
-                    },
-                    "& .MuiSlider-markActive": {
-                      backgroundColor: "white", // رنگ مارکر فعال
-                    },
-                    "& .MuiSlider-valueLabel": {
-                      position: "relative",
-                      top: "55px",
-                      fontSize: "14px",
-                      fontWeight: "600",
-                      backgroundColor: "rgba(0,0,0,0)", // پس‌زمینه برچسب مقدار
-                      color: "rgba(44, 44, 44, 1)", // رنگ متن برچسب
-                    },
-                  }}
-                /></Box>
-
-
-                <Typography variant="subtitle1" sx={{ margin: "25px 0 8px 0" }}>
-                  تعداد صفحات
-                </Typography>
-                <Box sx={{width:"100%" , display:"flex" , justifyContent:"center"}}>
-                <Slider
-                  min={0}
-                  max={1000}
-                  step={50}
-                  marks
-                  getAriaLabel={() => "Temperature range"}
-                  value={valuepaperform}
-                  onChange={handleChangepaperform}
-                  valueLabelDisplay="on"
-                  //   getAriaValueText={valuetext}
-
-                  sx={{
-                    width:"calc(100% - 20px)",
-                    color: "rgba(44, 44, 44, 1)", // رنگ اصلی اسلایدر
-                    "& .MuiSlider-thumb": {
-                      "&:hover, &:focus, &.Mui-active": {
-                        boxShadow: "none", // حذف سایه هاور
-                      },
-                      backgroundColor: "rgba(44, 44, 44, 1)", // رنگ دستگیره
-                      border: "none", // استایل دستگیره
-                    },
-                    "& .MuiSlider-track": {
-                      height: "6px",
-                      backgroundColor: "rgba(44, 44, 44, 1)", // رنگ خط پر شده
-                    },
-                    "& .MuiSlider-rail": {
-                      height: "6px",
-
-                      backgroundColor: "DarkBackground", // رنگ خط خالی
-                    },
-                    "& .MuiSlider-mark": {
-                      backgroundColor: "rgba(44, 44, 44, 1)", // رنگ مارکرها
-                      height: "2px",
-                      width: "2px",
-                      borderRadius: "50%",
-                    },
-                    "& .MuiSlider-markActive": {
-                      backgroundColor: "white", // رنگ مارکر فعال
-                    },
-                    "& .MuiSlider-valueLabel": {
-                      position: "relative",
-                      top: "55px",
-                      fontSize: "14px",
-                      fontWeight: "600",
-                      backgroundColor: "rgba(0,0,0,0)", // پس‌زمینه برچسب مقدار
-                      color: "rgba(44, 44, 44, 1)", // رنگ متن برچسب
-                    },
-                  }}
-                />
-
-
-                </Box>
-                
-
-                <Button fullWidth sx={{backgroundColor:"rgba(44, 44, 44, 1)" , color:"white" , height:"46px" , borderRadius:"12px", marginTop:"30px"}}>اعمال فیلتر</Button>
-              </Box>
-            </Grid>
-
+            
             <Grid size={11} sx={{ display: "flex", justifyContent: "center" }}>
               {statusbooks == 200 ? (
                 <Box

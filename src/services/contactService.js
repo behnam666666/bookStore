@@ -1,6 +1,9 @@
 import axios from "axios";
 
 const SERVER_URL = "https://bikaransystem.work.gd:8765";
+// document.cookie = "x-api-key=bikaran-c32fe4a1-e253-4b42-b287-85faca23c540-system; path=/;";
+axios.defaults.headers.common["x-api-key"] =
+  "bikaran-c32fe4a1-e253-4b42-b287-85faca23c540-system";
 
 let TOKEN = localStorage.getItem("token");
 if (TOKEN) {
@@ -39,23 +42,23 @@ export const getCommentsBook = (bookid) => {
 
 export const addratebook = (bookid) => {
   const url = `${SERVER_URL}/ratebook`;
-  return axios.post(url,bookid);
+  return axios.post(url, bookid);
 };
 
 export const addCommentsBook = (comments) => {
   const url = `${SERVER_URL}/commentbook`;
-  console.log(comments)
-  return axios.post(url , comments );
+  console.log(comments);
+  return axios.post(url, comments);
 };
 
 export const favebook = (bookid) => {
   const url = `${SERVER_URL}/fave`;
   console.log(bookid);
-  return axios.post(url , {"book_id" :parseInt(bookid)} );
+  return axios.post(url, { book_id: parseInt(bookid) });
 };
 export const favecheckbook = (bookid) => {
   const url = `${SERVER_URL}/favecheck/${bookid}`;
-  console.log("bookid favecheck :" , bookid)
+  console.log("bookid favecheck :", bookid);
   return axios.get(url);
 };
 
@@ -127,7 +130,9 @@ export const loginUser = async (user) => {
     const token = response.data.token; // فرض بر این است که توکن در پاسخ موجود است
     TOKEN = token;
     localStorage.setItem("token", TOKEN);
+
     axios.defaults.headers.common["Authorization"] = `${TOKEN}`; // هدر Authorization به‌روزرسانی شد
+
     console.log(TOKEN);
     return response; // بازگرداندن توکن برای استفاده در کدهای دیگر
   } catch (error) {
@@ -143,4 +148,17 @@ export const logoutUser = () => {
   console.log("logout");
 
   return axios.post(url);
+};
+
+export const filterSearchapi = (filter) => {
+  const url = `${SERVER_URL}/filterbooks`;
+  console.log(filter);
+  return axios
+  .post(url, filter)
+  .then((response) => {
+    console.log(response.data);
+  })
+  .catch((error) => {
+    console.error("There was an error!", error);
+  });
 };

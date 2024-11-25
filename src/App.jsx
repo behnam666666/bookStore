@@ -59,6 +59,7 @@ function App() {
   };
   const loginhandle2 = async () => {
     const { status } = await loginUser(loginvalue);
+    console.log("kir")
     console.log(status);
     if (status == 200) {
       setloginsucces(true);

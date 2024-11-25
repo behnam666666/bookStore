@@ -312,7 +312,7 @@ const [errsinup , setsinup]= useState(false);
                     sx={{ bgcolor: "#272935", color: "white" }}
                     fullWidth
                   >
-                    ساخت حساب
+                     ورود
                   </Button>
                 </Grid>
               </Grid>
