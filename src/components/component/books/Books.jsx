@@ -66,7 +66,7 @@ const Books = () => {
       setstatusbooks(status);
       console.log(status, data);
     } catch (err) {
-      setstatusbooks(err.response.status);
+      // setstatusbooks(err.response.status);
       if (err.response) {
         const { status } = err.response;
         console.error(`error books: ${status}`);

@@ -16,6 +16,9 @@ import {
   favebook,
 } from "../../../services/contactService";
 
+import { toast } from 'react-toastify';
+
+
 import { useNavigate } from "react-router-dom";
 
 import { useState, useEffect, useRef } from "react";
@@ -519,24 +522,18 @@ const Singlebook = () => {
                       bottom: "17px",
                     }}
                     onClick={async () => {
-                      inputValue != ""
-                        ? await addCommentsBook({
+                      inputValue != "" || ratingValue != 0
+                        ? await addratebook({
                             review: inputValue,
-                            rating: 0,
+                            rating: parseInt(ratingValue),
                             book_id: parseInt(bookid),
                           })
-                        : console.log("کامنت خالی");
+                        : toast.warning("لطفا کامنتی یا امتیاز دهید",{draggable: true,pauseOnHover: false,}  );
                       console.log(ratingValue);
 
-                      ratingValue == 0
-                        ? console.log("rating khali")
-                        : await addratebook({
-                            book_id: parseInt(bookid),
-                            rating: parseInt(ratingValue),
-                            review: "یبیتیبتببلیلیبلیلب",
-                          });
+                      
 
-                      inputValue != ""
+                      inputValue != "" &&ratingValue != 0
                         ? setrendercomment(!rendercomment)
                         : console.log("کامنت خالی");
 

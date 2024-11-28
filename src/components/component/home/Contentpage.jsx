@@ -14,7 +14,7 @@ import Header from "./Header";
 import Singlebook from "./Singlebook";
 
 import Home from "./Home";
-const Contentpage = ({ newbooks,statusnewbooks, loading, recommendbook, statusrecommend }) => {
+const Contentpage = ({ newbooks,statusnewbooks, loading, recommendbook, statusrecommend ,recommendbookrate ,statusrecommendrate }) => {
   const [showbooknav, setshowbooknav] = useState();
   const [viewsinglebook, setviewsinglebook] = useState(false);
   return (
@@ -50,6 +50,8 @@ const Contentpage = ({ newbooks,statusnewbooks, loading, recommendbook, statusre
               setshowbooknav={setshowbooknav}
               recommendbook={recommendbook}
               statusrecommend={statusrecommend}
+              recommendbookrate={recommendbookrate}
+                  statusrecommendrate={statusrecommendrate}
             />
           </motion.div>
         </Grid>

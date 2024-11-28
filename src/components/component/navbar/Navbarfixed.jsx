@@ -39,14 +39,14 @@ const Navbarfixed = () =>{
       "aria-controls": `tabpanel-${index}`,
     };
   };
-  const handleChange = (event, newValue) => {
+  const handleChange = (event, newValue ) => {
     setValue(newValue);
   };
 
 
     return(
         <>
-          <Header />
+          <Header  />
 
                 <Box
           width={100}

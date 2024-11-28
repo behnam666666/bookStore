@@ -1,5 +1,4 @@
 import MainLayout from "./components/layouts/MainLayout";
-
 import { Route, Routes } from "react-router-dom";
 
 import BookLoginSinup from "./components/component/first-page/BookLoginSinupp";
@@ -12,18 +11,21 @@ import {
   loginUser,
   getBooks,
   getnewBooks,
-  getrecommendbooks,
+  recommendbooksbyrecord,
+  recommendbooksbyrate
 } from "./services/contactService";
 import Navbarfixed from "./components/component/navbar/Navbarfixed";
 import Books from "./components/component/books/Books";
 import Savebooks from "./components/component/savebooks/Savebooks";
 import Singlebook from "./components/component/home/Singlebook";
 function App() {
-  // const [databooks, setdatabooks] = useState({});
+  const [logout, setlogout] = useState(false);
   const [newbooks, setnewbooks] = useState();
   const [statusnewbooks, setstatusnewbooks] = useState();
   const [recommendbook, setrecommendbook] = useState();
   const [statusrecommend, setstatusrecommend] = useState();
+  const [recommendbookrate, setrecommendbookrate] = useState();
+  const [statusrecommendrate, setstatusrecommendrate] = useState();
   const [loginsucces, setloginsucces] = useState(false);
   const [loading, setloading] = useState(true);
   const navigate = useNavigate();
@@ -116,7 +118,7 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data, status } = await getrecommendbooks();
+        const { data, status } = await recommendbooksbyrecord();
         setrecommendbook(data);
         setstatusrecommend(status);
         console.log("recommend book :", data);
@@ -135,12 +137,53 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data, status } = await getrecommendbooks();
+        const { data, status } = await recommendbooksbyrecord();
         setrecommendbook(data);
         setstatusrecommend(status);
         console.log("recommend book :", data);
       } catch (err) {
         setstatusrecommend(err.response.status);
+        if (err.response) {
+          const { status } = err.response;
+          console.error(`recommend : ${status}`);
+        } else {
+          console.error("recommend:", err.message);
+        }
+      }
+    };
+    fetchData();
+  }, []);
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, status } = await recommendbooksbyrate();
+        setrecommendbookrate(data);
+        setstatusrecommendrate(status);
+        console.log("recommend book :", data);
+      } catch (err) {
+        setstatusrecommendrate(err.response.status);
+        if (err.response) {
+          const { status } = err.response;
+          console.error(`recommend : ${status}`);
+        } else {
+          console.error("recommend:", err.message);
+        }
+      }
+    };
+    fetchData();
+  }, [loginsucces]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data, status } = await recommendbooksbyrate();
+        setrecommendbookrate(data);
+        setstatusrecommendrate(status);
+        console.log("recommend book :", data);
+      } catch (err) {
+        setstatusrecommendrate(err.response.status);
         if (err.response) {
           const { status } = err.response;
           console.error(`recommend : ${status}`);
@@ -170,7 +213,7 @@ function App() {
           path="/home"
           element={
             <>
-              <Navbarfixed />
+              <Navbarfixed  />
               <Outlet />
             </>
           }
@@ -193,6 +236,9 @@ function App() {
                   statusnewbooks={statusnewbooks}
                   recommendbook={recommendbook}
                   statusrecommend={statusrecommend}
+                  recommendbookrate={recommendbookrate}
+                  statusrecommendrate={statusrecommendrate}
+                  
                 />{" "}
               </>
             }

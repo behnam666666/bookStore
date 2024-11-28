@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const SERVER_URL = "https://bikaransystem.work.gd:8765";
+const SERVER_URL = "https://bookstorebybikaran.publicvm.com/api";
 // document.cookie = "x-api-key=bikaran-c32fe4a1-e253-4b42-b287-85faca23c540-system; path=/;";
 axios.defaults.headers.common["x-api-key"] =
   "bikaran-c32fe4a1-e253-4b42-b287-85faca23c540-system";
@@ -25,8 +25,12 @@ export const getnewBooks = () => {
   return axios.get(url);
 };
 
-export const getrecommendbooks = () => {
+export const recommendbooksbyrecord = () => {
   const url = `${SERVER_URL}/recommendbooksbyrecord`;
+  return axios.get(url);
+};
+export const recommendbooksbyrate = () => {
+  const url = `${SERVER_URL}/recommendbooksbyrate`;
   return axios.get(url);
 };
 
@@ -125,6 +129,7 @@ export const singupUser = (user) => {
 
 export const loginUser = async (user) => {
   const url = `${SERVER_URL}/login`;
+  console.log("sdafafsaf");
   try {
     const response = await axios.post(url, user);
     const token = response.data.token; // فرض بر این است که توکن در پاسخ موجود است
@@ -146,22 +151,17 @@ export const logoutUser = () => {
   delete axios.defaults.headers.common["Authorization"];
   const url = `${SERVER_URL}/user/logout`;
   console.log("logout");
-
-  return axios.post(url);
+  // return axios.post(url);
+  window.location.reload();
 };
 
 export const filterSearchapi = (filter) => {
   const url = `${SERVER_URL}/filterbooks`;
   console.log(filter);
-  return axios.post(url, filter)
-  
-  
+  return axios.post(url, filter );
 };
 
 export const savebooks = () => {
   const url = `${SERVER_URL}/getfavebooks`;
-  return axios.get(url)
-  
-  
+  return axios.get(url);
 };
-

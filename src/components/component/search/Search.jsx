@@ -231,14 +231,7 @@ const handleChangedateform = (event, newValue, activeThumb) => {
                     <Typography sx={{fontSize:"16px" , fontWeight:"500" , color:valuenonfiction?"rgba(253, 252, 247, 1)" : "rgba(138, 138, 138, 1)" , transition:".3s"}}>غیرداستانی</Typography>
                     <Box component="img" src={plusIcon} sx={{fontSize:"18px" , fontWeight:"500" ,filter:valuenonfiction? "invert(1)":"invert(.6)" , marginLeft:"4px" , transition:".3s" , transform:valuenonfiction?"rotate(45deg)" : "rotate(0deg)",transformOrigin:"center"}}></Box>
                   </Box>
-                  <Box id="non-fiction" onClick={(event)=>{setvaluenonfiction(!valuenonfiction);handlegenres(event)}}  component="div" sx={{cursor:"pointer", borderRadius:"33px", border:valuenonfiction?"1px solid rgba(44, 44, 44, 1)":"1px solid rgba(138, 138, 138, 1)", bgcolor:valuenonfiction? "rgba(44, 44, 44, 1)":"rgba(253, 252, 247, 1)" , paddingX:"12px" , display:"flex", justifyContent:"center" , alignItems:"center" , height:"32px" , transition:".3s" }}>
-                    <Typography sx={{fontSize:"16px" , fontWeight:"500" , color:valuenonfiction?"rgba(253, 252, 247, 1)" : "rgba(138, 138, 138, 1)" , transition:".3s"}}>غیرداستانی</Typography>
-                    <Box component="img" src={plusIcon} sx={{fontSize:"18px" , fontWeight:"500" ,filter:valuenonfiction? "invert(1)":"invert(.6)" , marginLeft:"4px" , transition:".3s" , transform:valuenonfiction?"rotate(45deg)" : "rotate(0deg)",transformOrigin:"center"}}></Box>
-                  </Box>
-                  <Box id="non-fiction" onClick={(event)=>{setvaluenonfiction(!valuenonfiction);handlegenres(event)}}  component="div" sx={{cursor:"pointer", borderRadius:"33px", border:valuenonfiction?"1px solid rgba(44, 44, 44, 1)":"1px solid rgba(138, 138, 138, 1)", bgcolor:valuenonfiction? "rgba(44, 44, 44, 1)":"rgba(253, 252, 247, 1)" , paddingX:"12px" , display:"flex", justifyContent:"center" , alignItems:"center" , height:"32px" , transition:".3s" }}>
-                    <Typography sx={{fontSize:"16px" , fontWeight:"500" , color:valuenonfiction?"rgba(253, 252, 247, 1)" : "rgba(138, 138, 138, 1)" , transition:".3s"}}>غیرداستانی</Typography>
-                    <Box component="img" src={plusIcon} sx={{fontSize:"18px" , fontWeight:"500" ,filter:valuenonfiction? "invert(1)":"invert(.6)" , marginLeft:"4px" , transition:".3s" , transform:valuenonfiction?"rotate(45deg)" : "rotate(0deg)",transformOrigin:"center"}}></Box>
-                  </Box>
+               
                   
 
                 </Box>

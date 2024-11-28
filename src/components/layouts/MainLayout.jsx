@@ -7,6 +7,9 @@ import { prefixer } from "stylis";
 
 import { theme } from "./../ui/theme";
 
+
+import { ToastContainer } from 'react-toastify';
+
 //NOTE Create RTL Cache
 const cacheRTL = createCache({
   key: "muirtl",
@@ -14,6 +17,8 @@ const cacheRTL = createCache({
 });
 
 const MainLayout = ({ children }) => {
+
+
   return (
     <CacheProvider value={cacheRTL}>
       <ThemeProvider theme={theme}>
@@ -21,6 +26,7 @@ const MainLayout = ({ children }) => {
           <Helmet>
             <title>ready-vite</title>
           </Helmet>
+          <ToastContainer rtl={true} theme="light" />
           {children}
         </HelmetProvider>
       </ThemeProvider>
